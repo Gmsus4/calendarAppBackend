@@ -1,19 +1,20 @@
 const express = require('express');
+require('dotenv').config();
 
 //Crear el servidor de express
 const app = express();
 
+// Directorio Publico
+//Un middleware no es una funcion que se ejecuta en el momento en el que alguien hace una peticion a mi servidor
+app.use(express.static('public'));
+
 //Rutas
-app.get('/', (req, res) =>{
-    console.log('se requiere el /')
-    res.json({
-        ok: true
-    })
-})
+app.use('/api/auth', require('./routes/auth'));
+//TODO: CRUD: Eventos
 
 //Escuchar peticiones
-app.listen(4000, ()=> {
-    console.log(`Servidor corriendo en puerto ${4000}`)
+app.listen(process.env.PORT, ()=> {
+    console.log(`Servidor corriendo en puerto ${process.env.PORT}`)
 });
 
 
