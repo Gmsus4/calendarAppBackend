@@ -1,13 +1,17 @@
+const { validationResult } = require('express-validator')
 const crearUsuario = (req, res) => {
-    console.log(req.body);
     const {name, email, password} = req.body;
-    if(name.length < 5){
+
+    //Manejo de errores
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
         return res.status(400).json({
             ok: false,
-            msg: 'El nombre debe contener 5 caracteres o más',
+            errors: errors.mapped()
         })
     }
-    res.json({
+
+    res.status(201).json({
         ok: true,
         msg: 'register',
         name,
@@ -17,8 +21,18 @@ const crearUsuario = (req, res) => {
 }
 
 const loginUsuario = (req, res) => {
+    //Manejo de errores
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            ok: false,
+            errors: errors.mapped()
+        })
+    }
+
     const {email, password} = req.body;
-    res.json({
+    
+    res.status(201).json({
         ok: true,
         msg: 'login',
         email,
