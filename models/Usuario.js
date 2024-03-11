@@ -3,16 +3,16 @@ const {Schema, model} = require('mongoose');
 const UsuarioSchema = Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true //no puede haber correos electronicos duplicados
     },
     password: {
         type: String,
-        require: true
+        required: true
     }
 });
 

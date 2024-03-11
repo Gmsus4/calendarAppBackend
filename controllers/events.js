@@ -1,3 +1,4 @@
+const Evento = require('../models/Evento');
 
 const getEventos = (req, res) => {
     try {
@@ -15,15 +16,15 @@ const getEventos = (req, res) => {
 }
 
 
-const crearEvento = (req, res) => {
-    //Verificar que tenga el evento
-    console.log(req.body);
+const crearEvento = async(req, res) => {
+    const evento = new Evento(req.body);
 
-    
     try {
+        evento.user = req.uid;
+        const eventoGuardado = await evento.save();
         res.status(201).json({
             ok: true,
-            msg: 'crearEvento'
+            evento: eventoGuardado
         })
     } catch (error) {
         console.log(error);
